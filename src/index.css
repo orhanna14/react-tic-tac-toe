@@ -12,9 +12,19 @@ body {
     content: "";
     display: table;
   }
+
+  .button {
+    font-weight: normal;
+    color: #9A0A35;
+  }
   
   .status {
     margin-bottom: 10px;
+  }
+
+  .selected-move {
+    font-weight: bold;
+    color: #E75480;
   }
   
   .square {
