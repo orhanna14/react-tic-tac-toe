@@ -15,34 +15,58 @@ class Board extends React.Component {
   renderSquare(i) {
     return (
     <Square
+      key={i}
       value={this.props.squares[i]}
       onClick={() => this.props.onClick(i)}
     />
     );
   }
 
-  render() {
-
-    return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
+  createBoardOfSquares() {
+    let boardOfSquares = [];
+    let index=0;
+    //outer loop to create parent
+    for (let row = 0; row <3; row++) {
+      let rowOfColumns = [];
+      //inner loop to create children
+      for (let col = 0; col < 3; col++) {
+        rowOfColumns.push(this.renderSquare(index));
+        index++;
+      }
+      boardOfSquares.push(<div className="board-row" key={index}>{rowOfColumns}</div>);
+    }
+    return boardOfSquares;
   }
+
+  render() {
+    return (
+      <div> 
+        {this.createBoardOfSquares()}
+      </div>
+    )
+  }
+  // render() {
+
+  //   return (
+  //     <div>
+  //       <div className="board-row">
+  //         {this.renderSquare(0)}
+  //         {this.renderSquare(1)}
+  //         {this.renderSquare(2)}
+  //       </div>
+  //       <div className="board-row">
+  //         {this.renderSquare(3)}
+  //         {this.renderSquare(4)}
+  //         {this.renderSquare(5)}
+  //       </div>
+  //       <div className="board-row">
+  //         {this.renderSquare(6)}
+  //         {this.renderSquare(7)}
+  //         {this.renderSquare(8)}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 }
 
 class Game extends React.Component {
@@ -88,8 +112,8 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    const moves = history.map((step, move, position) => {
-      position = getPosition(step.position)
+    const moves = history.map((step, move) => {
+      let position = getPosition(step.position)
       const desc = move ?
         'Go to move #' + move + ' located at [' + position +']':
         'Go to game start';
