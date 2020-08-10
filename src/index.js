@@ -16,7 +16,7 @@ class Board extends React.Component {
     const { winner, squares, onClick } = this.props;
     let className='square';
     if (winner) {
-      if (squares.includes(winner)) {
+      if (winner[1].includes(i)) {
         className='square-winner'
       }
     }
@@ -121,7 +121,7 @@ class Game extends React.Component {
 
     let status;
     if (winner) {
-      status = 'Winner: ' + winner;
+      status = 'Winner: ' + winner[0];
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
@@ -176,7 +176,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return [squares[a], lines[i]];
     }
   }
   return null;
